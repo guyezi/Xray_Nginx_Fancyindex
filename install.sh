@@ -32,7 +32,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 Warning="${Red}[警告]${Font}"
 
-shell_version="1.8.3.0"
+shell_version="1.8.3.1"
 shell_mode="None"
 tls_mode="None"
 ws_grpc_mode="None"
@@ -778,7 +778,6 @@ nginx_install() {
     --with-mail \
     --with-mail_ssl_module \
     --with-stream \
-    --with-rtmp-module \
     --with-stream_realip_module \
     --with-stream_ssl_module \
     --with-stream_ssl_preread_module \
