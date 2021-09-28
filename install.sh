@@ -32,8 +32,8 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 Warning="${Red}[警告]${Font}"
 
-shell_version="1.8.3.1"
-shell_mode="None"
+shell_version="1.8.3.2"
+shell_mode="Not Install"
 tls_mode="None"
 ws_grpc_mode="None"
 version_cmp="/tmp/version_cmp.tmp"
@@ -717,7 +717,7 @@ nginx_install() {
     judge "openssl 下载"
     wget -nc --no-check-certificate https://github.com/jemalloc/jemalloc/releases/download/${jemalloc_version}/jemalloc-${jemalloc_version}.tar.bz2 -P ${nginx_openssl_src}
     judge "jemalloc 下载"
-    wget -O ${nginx_openssl_src}/ngx-fancyindex-$${fancyindex_version}.zip  https://github.com/aperezdc/ngx-fancyindex/archive/v${fancyindex_version}.zip -P ${nginx_openssl_src}
+    wget -O ${nginx_openssl_src}/ngx-fancyindex-${fancyindex_version}.zip  https://github.com/aperezdc/ngx-fancyindex/archive/v${fancyindex_version}.zip
     judge "ngx-fancyindex 下载"
 
     cd ${nginx_openssl_src} || exit
@@ -806,7 +806,7 @@ nginx_install() {
 
 nginx_update() {
     if [[ -f "/etc/nginx/sbin/nginx" ]] && [[ ${bt_nginx} != "Yes" ]]; then
-        if [[ ${nginx_version} != $(info_extraction '\"nginx_version\"') ]] || [[ ${openssl_version} != $(info_extraction '\"openssl_version\"') ]] || [[ ${jemalloc_version} != $(info_extraction '\"jemalloc_version\"') ]]; then
+        if [[ ${nginx_version} != $(info_extraction '\"nginx_version\"') ]] || [[ ${openssl_version} != $(info_extraction '\"openssl_version\"') ]] || [[ ${jemalloc_version} != $(info_extraction '\"jemalloc_version\"') ]] || [[ ${fancyindex_version} != $(info_extraction '\"fancyindex_version\"') ]]; then
             ip_check
             if [[ -f ${xray_qr_config_file} ]]; then
                 domain=$(info_extraction '\"host\"')
@@ -1198,8 +1198,8 @@ nginx_conf_add() {
         ssl_ciphers           TLS-AES-128-GCM-SHA256:TLS-CHACHA20-POLY1305-SHA256:TLS_AES_128_CCM_SHA256:TLS_AES_256_GCM_SHA384:EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
         server_name           serveraddr.com;
         index index.html index.htm;
-        root /400.html;
-        error_page 400 https://www.bing.com;
+        root /www;
+        error_page 400 https://www.guyezi.com;
         # Config for 0-RTT in TLSv1.3
         ssl_early_data on;
         ssl_stapling on;
@@ -1234,7 +1234,7 @@ nginx_conf_add() {
             # Config for 0-RTT in TLSv1.3
             proxy_set_header Early-Data \$ssl_early_data;
         }
-        location /
+        location /openwrt
         {
             fancyindex on;
             fancyindex_localtime on;
@@ -1249,7 +1249,7 @@ nginx_conf_add() {
         listen 80;
         listen [::]:80;
         server_name serveraddr.com;
-        return 301 https://www.guyezi.com\$request_uri;
+        return 301 https://yun.guyezi.com\$request_uri;
     }
 EOF
     wait
@@ -1272,7 +1272,7 @@ nginx_conf_add_xtls() {
         real_ip_header      X-Forwarded-For;
         real_ip_recursive   on;
         add_header Strict-Transport-Security "max-age=63072000" always;
-        location /
+        location /openwrt
         {
             fancyindex on;
             fancyindex_localtime on;
@@ -1287,7 +1287,7 @@ nginx_conf_add_xtls() {
         listen 80;
         listen [::]:80;
         server_name         serveraddr.com;
-        return 301 https://www.guyezi.com\$request_uri;
+        return 301 https://yun.guyezi.com\$request_uri;
     }
 EOF
     wait
