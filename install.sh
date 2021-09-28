@@ -212,9 +212,9 @@ dependency_install() {
     fi
 
     if [[ "${ID}" == "centos" ]]; then
-        pkg_install "epel-release,pcre,pcre-devel,zlib-devel"
+        pkg_install "epel-release,pcre,pcre-devel,zlib-devel,GeoIP-devel"
     else
-        pkg_install "libpcre3,libpcre3-dev,zlib1g-dev"
+        pkg_install "libpcre3,libpcre3-dev,zlib1g-dev,libgeoip-dev"
     fi
 }
 
