@@ -12,7 +12,7 @@ cd "$(
 #	System Request: Debian 9+/Ubuntu 18.04+/Centos 7+
 #	Author:	guyezi
 #	Dscription: Xray Onekey Management
-#	Version: 2.0
+#	Version: 3.0
 #	email: admin@guyezi.com
 #	Official document: www.guyezi.com
 #=====================================================
@@ -32,8 +32,8 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 Warning="${Red}[警告]${Font}"
 
-shell_version="1.8.2.3"
-shell_mode="未安装"
+shell_version="1.8.3.0"
+shell_mode="None"
 tls_mode="None"
 ws_grpc_mode="None"
 version_cmp="/tmp/version_cmp.tmp"
